@@ -1,0 +1,65 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Lab1 Task2
+x-yc-apigateway:
+  ignoreTrailingSlashes: false   # требуем точного совпадения, включая слеш
+
+paths:
+  /:
+    get:
+      x-yc-apigateway-integration:
+        type: dummy
+        http_code: 200
+        http_headers:
+          Content-Type: "text/plain"
+          X-Author: "thelonecheetah"
+          Access-Control-Allow-Methods: "*"
+          Access-Control-Allow-Origin: "*"
+        content:
+          '*': "thelonecheetah"
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+  
+  /login/:
+    get:
+      x-yc-apigateway-integration:
+        type: dummy
+        http_code: 200
+        http_headers:
+          Content-Type: "text/plain; charset=UTF-8"
+          Access-Control-Allow-Origin: "*"
+        content:
+          '*': "thelonecheetah"
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /sample/:
+    get:
+      x-yc-apigateway-integration:
+        type: dummy
+        http_code: 200
+        http_headers:
+          Content-Type: "text/plain"
+        content:   # возвращаем текст функции task(x) = x * this ^ 2
+          '*': |
+            function task(x) {
+              return x * (this * this)
+            }
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string

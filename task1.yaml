@@ -1,0 +1,24 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Lab1 Task1
+paths:
+  /:
+    get:
+      x-yc-apigateway-integration:
+        type: dummy
+        http_code: 200
+        http_headers:
+          Content-Type: "text/plain"
+          X-Author: "thelonecheetah"
+          Access-Control-Allow-Methods: "*"
+          Access-Control-Allow-Origin: "*"
+        content:
+          '*': "thelonecheetah"
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string

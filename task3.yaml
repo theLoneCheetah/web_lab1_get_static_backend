@@ -1,0 +1,127 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Lab1 Task3
+x-yc-apigateway:
+  ignoreTrailingSlashes: false
+
+paths:
+  /:
+    get:
+      x-yc-apigateway-integration:
+        type: dummy
+        http_code: 200
+        http_headers:
+          Content-Type: "text/plain"
+          X-Author: "thelonecheetah"
+          Access-Control-Allow-Methods: "*"
+          Access-Control-Allow-Origin: "*"
+        content:
+          '*': "thelonecheetah"
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+  
+  /login/:
+    get:
+      x-yc-apigateway-integration:
+        type: dummy
+        http_code: 200
+        http_headers:
+          Content-Type: "text/plain; charset=UTF-8"
+          Access-Control-Allow-Origin: "*"
+        content:
+          '*': "thelonecheetah"
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /sample/:
+    get:
+      x-yc-apigateway-integration:
+        type: dummy
+        http_code: 200
+        http_headers:
+          Content-Type: "text/plain"
+        content:   # возвращаем текст функции task(x) = x * this ^ 2
+          '*': |
+            function task(x) {
+              return x * (this * this)
+            }
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /promise/:
+    get:
+      x-yc-apigateway-integration:
+        type: dummy
+        http_code: 200
+        http_headers:
+          Content-Type: "text/plain; charset=UTF-8"
+          Access-Control-Allow-Origin: "*"
+        content:   # возвращаем голый код функции, возвращающей промис
+          '*': |
+            function task(x) {
+              return new Promise((resolve, reject) => {
+                if (x < 18) resolve('yes');
+                else reject('no');
+              });
+            }
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /fetch/:
+    get:
+      x-yc-apigateway-integration:
+        type: dummy
+        http_code: 200
+        http_headers:
+          Content-Type: "text/html; charset=UTF-8"   # html
+          Access-Control-Allow-Origin: "*"
+        content:   # html с полем ввода и кнопкой, отправляет fetch по указанному url и показывает результат в поле ввода
+          '*': |
+            <!DOCTYPE html>
+            <html lang="ru">
+            <head>
+              <meta charset="UTF-8">
+              <title>fetch</title>
+            </head>
+            <body>
+              <input id="inp" type="text">
+              <button id="bt">Go</button>
+              <script>
+                document.getElementById('bt').addEventListener('click', async () => {
+                  const inp = document.getElementById('inp');
+                  const url = inp.value;
+                  const response = await fetch(url);
+                  const text = await response.text();
+                  inp.value = text;
+                });
+              </script>
+            </body>
+            </html>
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              schema:
+                type: string
